@@ -1,0 +1,6 @@
+@Espona.Api_HostAddress = http://localhost:5191
+
+GET {{Espona.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

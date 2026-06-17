@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/01. Presentation/">
+    <Project Path="Espona.Api/Espona.Api.csproj" />
+  </Folder>
+  <Folder Name="/02. Core/">
+    <Project Path="Espona.Adapter/Espona.Adapter.csproj" Id="cbe6abe9-b36c-4eda-9b52-a73adbf2cf80" />
+    <Project Path="Espona.Application/Espona.Application.csproj" Id="c7ab370f-ff11-4a25-ae03-93430990ed1b" />
+    <Project Path="Espona.DataTransferObject/Espona.DataTransferObject.csproj" Id="d8533cd9-af00-4bfc-8230-6641f14d2f26" />
+    <Project Path="Espona.Domain/Espona.Domain.csproj" Id="2e9d8f38-02d7-480d-a6a7-78c4b1179178" />
+  </Folder>
+  <Folder Name="/03. Infrastructure/">
+    <Project Path="Espona.Infrastructure/Espona.Infrastructure.csproj" Id="934199a9-455e-4038-b15c-a19475d2b3ef" />
+    <Project Path="Espona.Persistance/Espona.Persistance.csproj" Id="ca1d6db6-82a5-4ed3-a1ff-52e22f81e9f6" />
+  </Folder>
+  <Folder Name="/04. Shared/" />
+  <Folder Name="/05. Tests/">
+    <Project Path="Espona.Tests/Espona.Tests.csproj" Id="ef3fbb64-61ac-4ada-8fe6-96270736e7a3" />
+  </Folder>
+</Solution>
