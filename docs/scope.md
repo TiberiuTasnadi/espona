@@ -2,15 +2,15 @@
 
 ## Nombre del proyecto
 
-RuralOps
+Espona
 
 ## Resumen
 
-RuralOps es una aplicación web diseñada para ayudar a pequeñas explotaciones agrícolas y cooperativas a registrar y consultar la actividad realizada en sus parcelas.
+Espona es una aplicación web diseñada para ayudar a pequeñas explotaciones agrícolas y cooperativas a registrar y consultar la actividad realizada en sus parcelas.
 
 Actualmente gran parte de esta información se gestiona mediante hojas de cálculo, grupos de mensajería o incluso papel. Esto provoca pérdida de información, dificultad para consultar históricos y poca visibilidad sobre el estado real de la explotación.
 
-El objetivo de RuralOps es ofrecer una herramienta sencilla que permita registrar y consultar la información esencial del día a día agrícola.
+El objetivo de Espona es ofrecer una herramienta sencilla que permita registrar y consultar la información esencial del día a día agrícola.
 
 ## Problema
 
