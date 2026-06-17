@@ -1,49 +1,49 @@
-# Scope Definition
+Ôªø# Scope Definition
 
 ## MVP
 
-El MVP tiene como objetivo validar que la aplicaciÛn permite gestionar la informaciÛn b·sica de una explotaciÛn agrÌcola.
+El MVP tiene como objetivo validar que la aplicaci√≥n permite gestionar la informaci√≥n b√°sica de una explotaci√≥n agr√≠cola.
 
 ---
 
-# MÛdulo de parcelas
+# M√≥dulo de parcelas
 
 ## Incluye
 
 * Alta de parcela
-* ModificaciÛn de parcela
-* Baja lÛgica de parcela
+* Modificaci√≥n de parcela
+* Baja l√≥gica de parcela
 * Consulta de parcelas
 * Detalle de parcela
 
-## InformaciÛn mÌnima
+## Informaci√≥n m√≠nima
 
-* CÛdigo
+* C√≥digo
 * Nombre
 * Superficie
-* UbicaciÛn
+* Ubicaci√≥n
 * Estado
 
 ---
 
-# MÛdulo de cultivos
+# M√≥dulo de cultivos
 
 ## Incluye
 
 * Alta de cultivo
-* ModificaciÛn de cultivo
+* Modificaci√≥n de cultivo
 * Consulta de cultivo activo
-* HistÛrico de cultivos
+* Hist√≥rico de cultivos
 
-## InformaciÛn mÌnima
+## Informaci√≥n m√≠nima
 
 * Tipo de cultivo
 * Fecha de inicio
-* Fecha de finalizaciÛn
+* Fecha de finalizaci√≥n
 
 ---
 
-# MÛdulo de trabajos
+# M√≥dulo de trabajos
 
 ## Incluye
 
@@ -52,7 +52,7 @@ El MVP tiene como objetivo validar que la aplicaciÛn permite gestionar la inform
 * Filtrar por parcela
 * Filtrar por fechas
 
-## InformaciÛn mÌnima
+## Informaci√≥n m√≠nima
 
 * Tipo de trabajo
 * Fecha
@@ -61,14 +61,14 @@ El MVP tiene como objetivo validar que la aplicaciÛn permite gestionar la inform
 
 ---
 
-# MÛdulo de usuarios
+# M√≥dulo de usuarios
 
 ## Incluye
 
 * Alta de usuario
-* ModificaciÛn de usuario
-* ActivaciÛn
-* DesactivaciÛn
+* Modificaci√≥n de usuario
+* Activaci√≥n
+* Desactivaci√≥n
 
 ## Roles iniciales
 
@@ -79,29 +79,118 @@ El MVP tiene como objetivo validar que la aplicaciÛn permite gestionar la inform
 
 # No incluido
 
-## GestiÛn econÛmica
+## Gesti√≥n econ√≥mica
 
 * Facturas
 * Presupuestos
 * Cobros
 * Pagos
 
-## GestiÛn comercial
+## Gesti√≥n comercial
 
 * Clientes
 * Proveedores
 
-## GestiÛn logÌstica
+## Gesti√≥n log√≠stica
 
 * Inventario
 * Compras
-* AlmacÈn
+* Almac√©n
 
 ## Automatizaciones
 
 * IA
 * Sensores
 * Integraciones externas
+
+---
+
+---
+
+# Estrategia de Presentaci√≥n (Presentation Layer)
+
+## Introducci√≥n
+
+El sistema separa la l√≥gica de negocio (Domain + Application) de sus consumidores. La Presentation Layer se divide en dos canales independientes que comparten el mismo n√∫cleo:
+
+1. **API REST** - Consumidor externo (app m√≥vil de operarios)
+2. **BackOffice Web** - Interfaz interna (administraci√≥n completa)
+
+Ambos respetan Clean Architecture y no contaminan el dominio.
+
+---
+
+## 1. API REST (Consumidor Externo)
+
+### Responsabilidad
+Exponer funcionalidad limitada y controlada para consumidores externos (app m√≥vil).
+
+### Roles permitidos
+- **Operario**: Acceso a endpoints de trabajo (registro, consulta de propios trabajos)
+- **Administrador**: Acceso completo (igual que Operario + capacidad de consultar datos de otros usuarios)
+
+### MVP - Endpoints autorizados
+- **POST `/api/v1/workorders`** - Registro de trabajo en campo
+- **GET `/api/v1/workorders`** - Historial de trabajos del usuario
+- **GET `/api/v1/workorders/{id}`** - Detalles de trabajo
+- **GET `/api/v1/parcels`** - Listado de parcelas asignadas
+- **GET `/api/v1/parcels/{id}`** - Detalles de parcela
+- **POST `/api/v1/auth/login`** - Autenticaci√≥n
+
+### Filosof√≠a
+- **ISP (Interface Segregation)**: Expone solo lo necesario para el caso de uso
+- **Seguridad**: Autorizaci√≥n por usuario y explotaci√≥n
+- **Escalabilidad**: Preparada para futuras features sin exponerlas
+- **DTOs**: Mapeo estricto entre dominio y consumidor
+
+### Consumidor principal
+- **Pau (Operario)**: Registra trabajos desde app m√≥vil
+- **Administrador**: Tambi√©n puede acceder (para admin de operarios en campo)
+
+### NO incluido (protegido en BackOffice)
+- CRUD de parcelas, cultivos, usuarios
+- Dashboards y reportes
+- Exportaci√≥n de datos
+- Gesti√≥n de permisos
+
+**Ver**: [api-strategy.md](./api-strategy.md)
+
+---
+
+## 2. BackOffice Web (Interfaz Interna)
+
+### Responsabilidad
+Proporcionar gesti√≥n completa del sistema, accesible **solo para Administradores**.
+
+### Tecnolog√≠a
+- **Framework**: ASP.NET Core Razor Pages
+- **Rendering**: Server-side (simplicidad)
+- **Styling**: Bootstrap 5
+- **Exportaci√≥n**: Excel
+
+### Features principales
+- **Dashboard**: KPIs, gr√°ficos, alertas
+- **CRUD completo**: Explotaciones, parcelas, cultivos, usuarios, trabajos
+- **Reportes**: Por explotaci√≥n, parcela, per√≠odo
+- **Exportaci√≥n**: Trabajos a Excel con formatos
+- **Auditor√≠a**: Registro de todos los cambios
+- **Administraci√≥n**: Gesti√≥n de usuarios y roles
+
+### Consumidores
+- **Administrador**: Acceso total a todas las features
+
+### SRP (Single Responsibility)
+- Cada PageModel responsable de una acci√≥n espec√≠fica
+- Separaci√≥n clara: Controllers ‚Üí Services ‚Üí Domain
+
+**Ver**: [backoffice-strategy.md](./backoffice-strategy.md)
+
+### Beneficios
+- **Independencia**: Cambios en API no afectan BackOffice
+- **Testabilidad**: Domain + Application sin dependencias UI
+- **Seguridad**: API expone poco, BackOffice lo controla todo internamente
+- **Escalabilidad**: F√°cil agregar nuevos canales (desktop app, CLI, etc)
+- **Mantenibilidad**: Capas claras, responsabilidades definidas
 
 ---
 
@@ -114,4 +203,4 @@ El sistema debe priorizar:
 * Bajo coste operativo
 * Facilidad de aprendizaje
 
-Las decisiones tÈcnicas deber·n alinearse con estos principios.
+Las decisiones t√©cnicas deber√°n alinearse con estos principios.
